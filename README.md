@@ -13,7 +13,7 @@ The missing action for MongoDB :tada:
 Add it as a step to your workflow
 
 ```yml
-      - uses: ankane/setup-mongodb@v1
+      - uses: kebasyaty/setup-mongodb@v1
 ```
 
 ## Versions
@@ -21,7 +21,7 @@ Add it as a step to your workflow
 Specify a version
 
 ```yml
-      - uses: ankane/setup-mongodb@v1
+      - uses: kebasyaty/setup-mongodb@v1
         with:
           mongodb-version: 7.0
 ```
@@ -45,7 +45,7 @@ Test against multiple versions
       matrix:
         mongodb-version: [7.0, 6.0, 5.0, 4.4]
     steps:
-      - uses: ankane/setup-mongodb@v1
+      - uses: kebasyaty/setup-mongodb@v1
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
 ```
