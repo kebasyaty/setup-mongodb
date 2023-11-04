@@ -38,16 +38,48 @@ Version | `7.0` | `6.0` | `5.0` | `4.4`
 `windows-2022` | | | default |
 `windows-2019` | | | default |
 
-Test against multiple versions
+Full working example for Crystal language
 
 ```yml
+name: Specs
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
-        mongodb-version: [7.0, 6.0, 5.0, 4.4]
+        os: [ubuntu-22.04]
+        mongodb-version: [7.0, 6.0]
+
+    container:
+      image: crystallang/crystal:latest
+      options: --user root
+
     steps:
-      - uses: kebasyaty/setup-mongodb@v1
+      - name: Install sudo, wget, gnupg2 and systemctl
+        run: |
+          apt update
+          apt install -y sudo
+          sudo apt install -y wget gnupg2
+          sudo apt -y install systemctl
+      - name: Download source
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: shards install
+      - name: Check formatting
+        run: crystal tool format --check
+      - name: Start MongoDB
+        uses: kebasyaty/setup-mongodb@v1
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Run tests
+        run: crystal spec
 ```
 
 ## Extra Steps
