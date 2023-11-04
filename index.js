@@ -45,15 +45,15 @@ if (process.platform == 'darwin') {
   if (mongoVersion != '5.0' || image == 'ubuntu22') {
     if (fs.existsSync(`/var/log/mongodb`)) {
       // remove previous version
-      run(`sudo apt-get purge mongodb-org*`);
+      run(`sudo apt purge mongodb-org*`);
       run(`sudo rm -r /var/log/mongodb /var/lib/mongodb`);
     }
 
     // install new version
-    run(`wget -qO - https://www.mongodb.org/static/pgp/server-${mongoVersion}.asc | sudo apt-key add -`);
+    run(`wget -qO - https://www.mongodb.org/static/pgp/server-${mongoVersion}.asc | sudo apt add -`);
     run(`echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME)/mongodb-org/${mongoVersion} multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-${mongoVersion}.list`);
-    run(`sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/mongodb-org-${mongoVersion}.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"`);
-    run(`sudo apt-get install mongodb-org`);
+    run(`sudo apt update -o Dir::Etc::sourcelist="sources.list.d/mongodb-org-${mongoVersion}.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"`);
+    run(`sudo apt install -y mongodb-org`);
   }
 
   // start
