@@ -82,6 +82,45 @@ jobs:
         run: crystal spec
 ```
 
+Alternative: Ubuntu 22.04, MongoDB 6.0 and Crystal language
+
+```yml
+name: Specs
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    container:
+      image: crystallang/crystal:latest
+      options: --user root
+
+    steps:
+      - name: Install MongoDB 6.0 Server
+        run: |
+          apt update
+          apt install -y sudo
+          sudo apt install -y gnupg curl systemctl
+          curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \sudo gpg -o /etc/apt/trusted.gpg.d//mongodb-server-6.0.gpg \--dearmor
+          echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+          sudo apt update
+          sudo apt install -y mongodb-org
+          sudo systemctl enable --now mongod
+      - name: Download source
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: shards install
+      - name: Check formatting
+        run: crystal tool format --check
+      - name: Run tests
+        run: crystal spec
+```
+
 ## Extra Steps
 
 Run queries
