@@ -82,7 +82,9 @@ jobs:
         run: crystal spec
 ```
 
-Alternative: Ubuntu 22.04, MongoDB 6.0 and Crystal language
+Alternative option without setup-mongodb@v1
+<br>
+Ubuntu 22.04, MongoDB 6.0 and Crystal language
 
 ```yml
 name: Specs
