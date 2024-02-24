@@ -65,9 +65,8 @@ jobs:
       - name: Install sudo, wget, gnupg2 and systemctl
         run: |
           apt update
-          apt install -y sudo
-          sudo apt install -y wget gnupg2
-          sudo apt -y install systemctl
+          apt -y install sudo
+          sudo apt install -y wget gnupg2 systemctl
       - name: Download source
         uses: actions/checkout@v4
       - name: Install dependencies
@@ -106,8 +105,8 @@ jobs:
       - name: Install MongoDB 6.0 Server
         run: |
           apt update
-          apt install -y sudo
-          sudo apt install -y gnupg curl systemctl
+          apt -y install sudo
+          sudo apt -y install gnupg2 curl systemctl
           curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \sudo gpg -o /etc/apt/trusted.gpg.d//mongodb-server-6.0.gpg \--dearmor
           echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
           sudo apt update
