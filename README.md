@@ -62,7 +62,7 @@ jobs:
       options: --user root
 
     steps:
-      - name: Install sudo, wget, gnupg2 and systemctl
+      - name: Install dependencies
         run: |
           apt update
           apt -y install sudo
@@ -102,7 +102,7 @@ jobs:
       options: --user root
 
     steps:
-      - name: Install MongoDB 6.0 Server
+      - name: Install dependencies
         run: |
           apt update
           apt -y install sudo
